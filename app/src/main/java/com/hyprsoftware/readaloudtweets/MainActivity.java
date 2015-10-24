@@ -1,6 +1,7 @@
 package com.hyprsoftware.readaloudtweets;
 
 import android.app.IntentService;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TwitterLoginButton loginButton;
     private ListView twtResults;
-    private List<Tweet> crtTweets = new ArrayList<>();
+    private ArrayList<Tweet> crtTweets = new ArrayList<>();
     private Speaker speaker;
     private final int CHECK_CODE = 0x1;
     //private final int LONG_DURATION = 5000;
@@ -162,7 +163,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onPlayButtonPressed(MenuItem item) {
-        if(speaker != null){
+
+        Intent intent = new Intent(this, TTSService.class);
+        /* Send optional extras to Download IntentService */
+        intent.putExtra("data", crtTweets);
+
+        ComponentName ttsservice = startService(intent);
+
+/*        if(speaker != null){
 
             speaker.allow(true);
 
@@ -170,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             for (Tweet tweet:crtTweets) {
                 speaker.speak(tweet.text);
             }
-        }
+        }*/
     }
 
     @Override
