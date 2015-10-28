@@ -20,7 +20,9 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="8188f3bb81d717ea32d786480166539407241647" />
-
+        <service
+            android:name=".TTSService"
+            android:exported="false" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

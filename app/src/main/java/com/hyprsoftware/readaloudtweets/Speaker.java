@@ -12,7 +12,7 @@ import java.util.Locale;
  */
 public class Speaker implements TextToSpeech.OnInitListener {
 
-    private TextToSpeech tts;
+    public TextToSpeech tts;
 
     private boolean ready = false;
 

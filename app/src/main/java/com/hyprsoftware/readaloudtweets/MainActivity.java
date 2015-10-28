@@ -11,6 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -20,9 +24,11 @@ import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.internal.TwitterCollection;
 import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.services.StatusesService;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         twtResults.setVisibility(View.INVISIBLE);
 
-        checkTTS();
+        //checkTTS();
 
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
@@ -165,9 +171,11 @@ public class MainActivity extends AppCompatActivity {
     public void onPlayButtonPressed(MenuItem item) {
 
         Intent intent = new Intent(this, TTSService.class);
-        /* Send optional extras to Download IntentService */
-        intent.putExtra("data", crtTweets);
 
+        /* Send optional extras to Download IntentService */
+        String json = new Gson().toJson(crtTweets);
+        intent.putExtra("data", json);
+        intent.setAction(TTSService.ACTION_PLAY);
         ComponentName ttsservice = startService(intent);
 
 /*        if(speaker != null){
